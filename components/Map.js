@@ -6,7 +6,7 @@ import Geolocation from 'react-native-geolocation-service';
 
 
 const Map = () => { 
-  const [latitude, setLatitude] = useState(null);
+  
 /*   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
@@ -53,10 +53,6 @@ const Map = () => {
       new AnimatedRegion({
         latitude: -29.1687337,
         longitude: -51.1336682,
-      }),
-      new AnimatedRegion({
-        latitude: -29.1687330,
-        longitude: -50.0336640,
       })
     );
 

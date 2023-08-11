@@ -1,15 +1,32 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View} from "react-native";
-import { useState } from 'react';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Navbar from './components/Navbar';
-import Map from './components/Map';
+import MapTest from './components/MapTest';
+import NewAnimal from './components/NewAnimal';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="NewAnimal" component={NewAnimal} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function MainScreen() {
+  return (
     <View style={styles.container}>
-    <Map/>
-    <Navbar style={{width: '100%', height: '100%'}} />
+      <StatusBar style="auto" />
+      <MapTest />
+      <Navbar style={{ width: '100%', height: '100%' }} />
     </View>
   );
 }
