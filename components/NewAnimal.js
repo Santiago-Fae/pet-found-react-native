@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import Navbar from './Navbar';
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'expo-image-picker';
+import MapaSelecaoLocal from './MapaSelecaoLocal'; // Importe o novo componente
+
+const PlaceholderImage = require('../assets/images/background-image.png');
 
 const FormularioCadastro = () => {
   const [nome, setNome] = useState('');
   const [local, setLocal] = useState('');
   const [foto, setFoto] = useState(null);
-console.log(ImagePicker)
-  const abrirSelecionadorDeImagem = () => {
-    ImagePicker.launchImageLibrary({}, (response) => {
-      if (!response.didCancel && !response.error) {
-        setFoto(response.path);
-      }
+  const [showMapa, setShowMapa] = useState(false); // Estado para controlar a exibição do mapa
+  const imageSource = foto ? { uri: foto } : PlaceholderImage;
+
+  const onSelectLocation = (location) => {
+    setLocal(location);
+    setShowMapa(false);
+  };
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
     });
+
+    if (!result.canceled) {
+      setFoto(result.assets[0].uri);
+    } else {
+      alert('You did not select any image.');
+    }
   };
 
   const cadastrar = () => {
@@ -34,18 +49,19 @@ console.log(ImagePicker)
         placeholder="Digite seu nome"
       />
 
-      <Text>Local:</Text>
-      <TextInput
-        value={local}
-        onChangeText={setLocal}
-        placeholder="Digite o local"
-      />
+      <TouchableOpacity onPress={() => setShowMapa(true)}>
+        <Text>Selecionar Local no Mapa</Text>
+      </TouchableOpacity>
 
-      <TouchableOpacity onPress={abrirSelecionadorDeImagem}>
+      {/* Exibe o mapa quando showMapa for verdadeiro */}
+      {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} mapHeight={200} />}
+
+
+      <TouchableOpacity onPress={pickImageAsync}>
         <Text>Selecionar Foto</Text>
       </TouchableOpacity>
 
-      {foto && <Image source={{ uri: foto }} style={{ width: 100, height: 100 }} />}
+      <Image source={imageSource} style={{ width: 100, height: 100 }} />
 
       <TouchableOpacity onPress={cadastrar}>
         <Text>Cadastrar</Text>

@@ -5,8 +5,7 @@ import Carousel from 'react-native-snap-carousel';
 
 const Map = () => {
   const [markers, setMarkers] = useState([
-    { id: 1, latitude: -29.1687337, longitude: -51.1336682 },
-    { id: 2, latitude: -29.170589, longitude: -51.136589 },
+    { id: 1, latitude: -29.1687337, longitude: -51.1336682, text: 'A' },
   ]);
 
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
@@ -26,6 +25,7 @@ const Map = () => {
     <View style={styles.carouselItem}>
       <Text>{`Latitude: ${item.latitude}`}</Text>
       <Text>{`Longitude: ${item.longitude}`}</Text>
+      <Text>{`Text: ${item.text}`}</Text>
     </View>
   );
 
@@ -42,6 +42,10 @@ const Map = () => {
       },
       500
     );
+  };
+  const ccc = () => {
+    const newMarker = { id: 2, latitude: -29.170589, longitude: -51.136589, text: 'B' };
+    setMarkers(prevMarkers => [...prevMarkers, newMarker]);
   };
 
   const mapRef = useRef(null); // Ref for the MapView
@@ -64,6 +68,7 @@ const Map = () => {
             onDragEnd={e => handleMarkerDrag(e, index)}
             onPress={() => {
               carouselRef.current.snapToItem(index); // Snap to the selected marker's index
+              ccc();
             }}
           />
         ))}
@@ -77,6 +82,7 @@ const Map = () => {
           itemWidth={300}
           slideStyle={{ marginHorizontal: 10 }}
           onSnapToItem={handleSnapToItem}
+          onPress={ccc}
         />
       </View>
     </View>
