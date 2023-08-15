@@ -2,12 +2,15 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
+import { useRoute } from '@react-navigation/native';
 
 const Map = () => {
   const [markers, setMarkers] = useState([
     { id: 1, latitude: -29.1687337, longitude: -51.1336682, text: 'A' },
   ]);
-
+  const route = useRoute();
+  const { teste } = route.params;
+  console.log(teste);
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
 
   const carouselRef = useRef(null); // Ref for the Carousel

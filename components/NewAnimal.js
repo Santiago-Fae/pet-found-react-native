@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import Navbar from './Navbar';
+import MapTest from './MapTest';
 import * as ImagePicker from 'expo-image-picker';
 import MapaSelecaoLocal from './MapaSelecaoLocal'; // Importe o novo componente
+import { useNavigation } from '@react-navigation/native';
 
 const PlaceholderImage = require('../assets/images/background-image.png');
 
 const FormularioCadastro = () => {
+  const navigation = useNavigation();
   const [nome, setNome] = useState('');
   const [local, setLocal] = useState('');
   const [foto, setFoto] = useState(null);
@@ -32,11 +35,10 @@ const FormularioCadastro = () => {
   };
 
   const cadastrar = () => {
-    if (nome && local && foto) {
+    if (local) {
       // Lógica de cadastro aqui
-      console.log('Cadastro realizado com sucesso:', { nome, local, foto });
+      navigation.navigate('Main', { teste: [local] });
     } else {
-      console.log('Por favor, preencha todos os campos obrigatórios.');
     }
   };
 

@@ -16,12 +16,15 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="NewAnimal" component={NewAnimal} />
+        <Stack.Screen name="MapTest" component={MapTest} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-function MainScreen() {
+function MainScreen(local) {
+  console.log(local)
+  console.log('local')
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
