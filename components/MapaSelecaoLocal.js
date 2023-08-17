@@ -1,36 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 
-const MapaSelecaoLocal = ({ onSelectLocation,  mapHeight }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+const MapaSelecaoLocal = ({ onSelectLocation, mapHeight }) => {
+  const [region, setRegion] = useState({
+    latitude: -29.1687337,
+    longitude: -51.1336682,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
 
-  const handleMapPress = (event) => {
-    const { latitude, longitude } = event.nativeEvent.coordinate;
-    setSelectedLocation({ latitude, longitude });
+  const onRegionChange = (newRegion) => {
+    setRegion(newRegion);
   };
 
   const handleConfirm = () => {
-    if (selectedLocation) {
-      onSelectLocation(selectedLocation);
-    }
+    onSelectLocation(region);
   };
+
   return (
-    <View style={{height:  Dimensions.get('window').height  + 100}}>
+    <View style={{ height: Dimensions.get('window').height + 100 }}>
       <MapView
-        style={{flex: 1, width: Dimensions.get('window').width, height: Dimensions.get('window').height + 80, left: -20, top: -100}}
-        initialRegion={{
-          latitude: selectedLocation ? selectedLocation.latitude : -29.1687337,
-          longitude: selectedLocation ? selectedLocation.longitude : -51.1336682,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+        style={{
+          flex: 1,
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height + 170,
+          left: -20,
+          top: -170,
         }}
-        onPress={handleMapPress}
-      >
-        {selectedLocation && (
-          <Marker coordinate={selectedLocation} />
-        )}
+        initialRegion={region}
+        onRegionChange={onRegionChange}>
+        <Marker.Animated coordinate={region} />
       </MapView>
+
       <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
         <Text style={styles.confirmButtonText}>Confirmar</Text>
       </TouchableOpacity>
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: Dimensions.get('window').height * 0.3,
+    bottom: Dimensions.get('window').height * 0.5,
     flex: 1,
   },
   confirmButtonText: {

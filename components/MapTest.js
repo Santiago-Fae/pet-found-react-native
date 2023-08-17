@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import { useRoute } from '@react-navigation/native';
@@ -12,7 +12,7 @@ const Map = () => {
   
   useEffect(() => {
     if (route.params?.teste) {
-      console.log(route.params.teste);
+      route.params.teste.id = markers.length + 1;
       setMarkers(prevMarkers => [...prevMarkers, route.params.teste]);
     }
   }, [route.params?.teste]);
@@ -35,6 +35,7 @@ const Map = () => {
       <Text>{`Latitude: ${item.latitude}`}</Text>
       <Text>{`Longitude: ${item.longitude}`}</Text>
       <Text>{`Nome: ${item.nome}`}</Text>
+      <Image source={{ uri: item.foto }} style={styles.image} />
     </View>
   );
 
@@ -52,11 +53,7 @@ const Map = () => {
       500
     );
   };
-  
-  const ccc = () => {
-    const newMarker = { id: 2, latitude: -29.170589, longitude: -51.136589, nome: 'B' };
-    setMarkers(prevMarkers => [...prevMarkers, newMarker]);
-  };
+
 
   const mapRef = useRef(null); // Ref for the MapView
 
@@ -80,7 +77,6 @@ const Map = () => {
             onDragEnd={e => handleMarkerDrag(e, index)}
             onPress={() => {
               carouselRef.current.snapToItem(index); // Snap to the selected marker's index
-              ccc();
             }}
           />
         ))}
@@ -94,7 +90,6 @@ const Map = () => {
           itemWidth={300}
           slideStyle={{ marginHorizontal: 10 }}
           onSnapToItem={handleSnapToItem}
-          onPress={ccc}
         />
       </View>
     </View>
@@ -104,11 +99,10 @@ const Map = () => {
 const styles = StyleSheet.create({
   carouselContainer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 100,
     backgroundColor: 'transparent',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   carouselItem: {
     backgroundColor: 'white',
@@ -117,6 +111,12 @@ const styles = StyleSheet.create({
     borderColor: 'lightgray',
     borderWidth: 1,
     elevation: 3,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+   /*  alignSelf: 'center', */
   },
 });
 
