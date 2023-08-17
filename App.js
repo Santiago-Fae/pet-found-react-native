@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="NewAnimal" component={NewAnimal} />
         <Stack.Screen name="MapTest" component={MapTest} />
@@ -23,8 +23,7 @@ export default function App() {
 }
 
 function MainScreen(local) {
-  console.log(local)
-  console.log('local')
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

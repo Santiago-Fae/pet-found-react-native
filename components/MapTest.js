@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
@@ -6,11 +6,17 @@ import { useRoute } from '@react-navigation/native';
 
 const Map = () => {
   const [markers, setMarkers] = useState([
-    { id: 1, latitude: -29.1687337, longitude: -51.1336682, text: 'A' },
+    { id: 1, latitude: -29.1687337, longitude: -51.1336682, nome: 'A' },
   ]);
   const route = useRoute();
-  const { teste } = route.params;
-  console.log(teste);
+  
+  useEffect(() => {
+    if (route.params?.teste) {
+      console.log(route.params.teste);
+      setMarkers(prevMarkers => [...prevMarkers, route.params.teste]);
+    }
+  }, [route.params?.teste]);
+
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
 
   const carouselRef = useRef(null); // Ref for the Carousel
@@ -28,7 +34,7 @@ const Map = () => {
     <View style={styles.carouselItem}>
       <Text>{`Latitude: ${item.latitude}`}</Text>
       <Text>{`Longitude: ${item.longitude}`}</Text>
-      <Text>{`Text: ${item.text}`}</Text>
+      <Text>{`Nome: ${item.nome}`}</Text>
     </View>
   );
 
@@ -46,23 +52,26 @@ const Map = () => {
       500
     );
   };
+  
   const ccc = () => {
-    const newMarker = { id: 2, latitude: -29.170589, longitude: -51.136589, text: 'B' };
+    const newMarker = { id: 2, latitude: -29.170589, longitude: -51.136589, nome: 'B' };
     setMarkers(prevMarkers => [...prevMarkers, newMarker]);
   };
 
   const mapRef = useRef(null); // Ref for the MapView
 
   return (
-    <View style={{width: '100%', height: '90%',flex: 1}}>
-      <MapView style={{width: '100%', height: '100%',flex: 1}}
+    <View style={{ width: '100%', height: '90%', flex: 1 }}>
+      <MapView
+        style={{ width: '100%', height: '100%', flex: 1 }}
         ref={mapRef}
         initialRegion={{
           latitude: markers[0].latitude,
           longitude: markers[0].longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }}>
+        }}
+      >
         {markers.map((marker, index) => (
           <Marker
             key={marker.id}

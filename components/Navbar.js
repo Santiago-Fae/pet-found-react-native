@@ -2,14 +2,16 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
 const Navbar = () => {
   const navigation = useNavigation();
   const larguraTela = Dimensions.get('window').width;
   const alturaMenu = Dimensions.get('window').height * 0.1; // 10% da altura da tela
 
   const newAnimal = () => {
-    navigation.navigate('NewAnimal'); // Navega para o componente FormularioCadastro
+    navigation.navigate('NewAnimal');
+  };
+  const Map = () => {
+    navigation.navigate('Main');
   };
 
   return (
@@ -18,7 +20,7 @@ const Navbar = () => {
         <Text style={styles.textoBotao}>Opção 1</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity onPress={Map} style={styles.botao}>
         <Text style={styles.textoBotao}>Opção 2</Text>
       </TouchableOpacity>
 
@@ -31,6 +33,8 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    bottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

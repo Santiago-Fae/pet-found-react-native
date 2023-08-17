@@ -16,9 +16,9 @@ const MapaSelecaoLocal = ({ onSelectLocation,  mapHeight }) => {
     }
   };
   return (
-    <View style={{ flex: 1, height: mapHeight }}>
+    <View style={{height:  Dimensions.get('window').height  + 100}}>
       <MapView
-        style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height * 0.9, top: -100}}
+        style={{flex: 1, width: Dimensions.get('window').width, height: Dimensions.get('window').height + 80, left: -20, top: -100}}
         initialRegion={{
           latitude: selectedLocation ? selectedLocation.latitude : -29.1687337,
           longitude: selectedLocation ? selectedLocation.longitude : -51.1336682,
@@ -44,10 +44,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 20,
-    left: Dimensions.get('window').width / 2 - 50,
+    bottom: Dimensions.get('window').height * 0.3,
+    flex: 1,
   },
   confirmButtonText: {
     color: 'white',
