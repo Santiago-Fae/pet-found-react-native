@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesome, FontAwesome5, AntDesign  } from '@expo/vector-icons';
 
 const Navbar = () => {
   const navigation = useNavigation();
@@ -17,15 +18,15 @@ const Navbar = () => {
   return (
     <View style={[styles.container, { width: larguraTela, height: alturaMenu }]}>
       <TouchableOpacity onPress={newAnimal} style={styles.botao}>
-        <Text style={styles.textoBotao}>Opção 1</Text>
+        <Text style={styles.textoBotao}><AntDesign name="plussquare" size={30} color="black" /></Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={Map} style={styles.botao}>
-        <Text style={styles.textoBotao}>Opção 2</Text>
+        <Text style={styles.textoBotao}><FontAwesome name="home" size={30} color="black" /></Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.botao}>
-        <Text style={styles.textoBotao}>Opção 3</Text>
+        <Text style={styles.textoBotao}><FontAwesome5 name="paw" size={30} color="black" /></Text>
       </TouchableOpacity>
     </View>
   );

@@ -7,8 +7,10 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 const Map = () => {
   const [markers, setMarkers] = useState([
     { id: 1, latitude: -29.1687337, longitude: -51.1336682, nome: 'A' },
+    { id: 2, latitude: -29.1687366, longitude: -51.1444444, nome: 'B' },
   ]);
   const route = useRoute();
+  const markerRefs = useRef(markers?.map(() => React.createRef()) || []);
 
   const navigation = useNavigation();
   const handleDetailsButton = item => {
@@ -17,14 +19,14 @@ const Map = () => {
   };
 
   useEffect(() => {
-    if (route.params?.teste) {
+    if (route.params?.teste && route.params.teste) {
       route.params.teste.id = markers.length + 1;
       setMarkers(prevMarkers => [...prevMarkers, route.params.teste]);
+      markerRefs.current =  [...markerRefs.current, React.createRef()];
+      navigation.setParams({teste: null});
     }
   }, [route.params?.teste]);
-
-  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
-
+  
   const carouselRef = useRef(null); // Ref for the Carousel
 
   const handleMarkerDrag = (e, markerIndex) => {
@@ -39,7 +41,7 @@ const Map = () => {
   const renderItem = ({ item }) => (
     <View style={styles.carouselItem}>
       { item.foto ? <Image source={{ uri: item.foto }} style={styles.image} /> : ''}
-      <Text>{`Latitude: ${item.latitude}`}</Text>
+      <Text>{`Id: ${item.id}`}</Text>
       <Text>{`Longitude: ${item.longitude}`}</Text>
       <Text>{`Nome: ${item.nome}`}</Text>
       <TouchableOpacity
@@ -51,9 +53,8 @@ const Map = () => {
   );
 
   const handleSnapToItem = index => {
-    setSelectedMarkerIndex(index); // Set the selected marker index
-    // Snap the map to the selected marker's position
     const marker = markers[index];
+    markerRefs.current[index].current.showCallout()
     mapRef.current.animateToRegion(
       {
         latitude: marker.latitude,
@@ -84,6 +85,8 @@ const Map = () => {
           <Marker
             key={marker.id}
             coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+            title={marker.nome}
+            ref={markerRefs.current[index]}
             draggable
             onDragEnd={e => handleMarkerDrag(e, index)}
             onPress={() => {
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 10,
+    borderRadius: 10,
     alignSelf: 'center',
   },
   detailsButton: {
@@ -138,6 +142,10 @@ const styles = StyleSheet.create({
   detailsButtonText: {
     color: 'white',
     fontSize: 14,
+  },
+
+  selectedMarker: {
+    backgroundColor: 'blue',
   },
 });
 

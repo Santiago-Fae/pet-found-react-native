@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Keyboard } from 'react-native';
 import Navbar from './Navbar';
 import MapaSelecaoLocal from './MapaSelecaoLocal'; // Importe o novo componente
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons'; // Importe o FontAwesome
 
-const PlaceholderImage = require('../assets/images/background-image.png');
+const PlaceholderImage = require('../assets/images/im-no-photo.jpg');
 
 const FormularioCadastro = () => {
   const navigation = useNavigation();
@@ -14,13 +14,11 @@ const FormularioCadastro = () => {
   const [local, setLocal] = useState('');
   const [foto, setFoto] = useState(null);
   const [showMapa, setShowMapa] = useState(false);
-  const [isSelected, setIsSelected] = useState(false); // Novo estado para controlar a seleção
   const imageSource = foto ? { uri: foto } : PlaceholderImage;
 
   const onSelectLocation = (location) => {
     setLocal(location);
     setShowMapa(false);
-    setIsSelected(true); // Defina como selecionado
   };
 
   const pickImageAsync = async () => {
@@ -29,7 +27,7 @@ const FormularioCadastro = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setFoto(result.assets[0].uri);
     } else {
       alert('You did not select any image.');
@@ -61,20 +59,24 @@ const FormularioCadastro = () => {
         style={styles.input}
       />
 
-      <TouchableOpacity onPress={() => setShowMapa(true)} style={[styles.mapButton, isSelected && styles.selectedButton]}>
+      <TouchableOpacity onPress={() => {Keyboard.dismiss(); setShowMapa(true)}} style={[styles.mapButton, local && styles.selectedButton]}>
         <View style={styles.buttonContent}>
-          <Text style={[styles.buttonText, isSelected && styles.selectedButtonText]}>
+          <Text style={[styles.buttonText, local && styles.selectedButtonText]}>
             {local ? 'Local Selecionado' : 'Selecionar Local no Mapa'}
           </Text>
-          {isSelected && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
+          {local && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
         </View>
-
       </TouchableOpacity>
 
       {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} local={local} />}
 
-      <TouchableOpacity onPress={pickImageAsync} style={styles.imageButton}>
-        <Text style={styles.buttonText}>Selecionar Foto</Text>
+      <TouchableOpacity onPress={pickImageAsync} style={[styles.mapButton, foto && styles.selectedButton]}>
+        <View style={styles.buttonContent}>
+          <Text style={[styles.buttonText, foto && styles.selectedButtonText]}>
+            {foto ? 'Foto Selecionada' : 'Selecionar Foto'}
+          </Text>
+          {foto && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
+        </View>
       </TouchableOpacity>
 
       <Image source={imageSource} style={styles.image} />
