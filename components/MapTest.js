@@ -1,15 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const Map = () => {
   const [markers, setMarkers] = useState([
     { id: 1, latitude: -29.1687337, longitude: -51.1336682, nome: 'A' },
   ]);
   const route = useRoute();
-  
+
+  const navigation = useNavigation();
+  const handleDetailsButton = item => {
+    // Navegar para a tela de detalhes com as informações do item
+    navigation.navigate('ItemDetalhes', { item });
+  };
+
   useEffect(() => {
     if (route.params?.teste) {
       route.params.teste.id = markers.length + 1;
@@ -32,10 +38,15 @@ const Map = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.carouselItem}>
+      { item.foto ? <Image source={{ uri: item.foto }} style={styles.image} /> : ''}
       <Text>{`Latitude: ${item.latitude}`}</Text>
       <Text>{`Longitude: ${item.longitude}`}</Text>
       <Text>{`Nome: ${item.nome}`}</Text>
-      <Image source={{ uri: item.foto }} style={styles.image} />
+      <TouchableOpacity
+        style={styles.detailsButton}
+        onPress={() => handleDetailsButton(item)}>
+        <Text style={styles.detailsButtonText}>Detalhes</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -88,7 +99,6 @@ const Map = () => {
           renderItem={renderItem}
           sliderWidth={300}
           itemWidth={300}
-          slideStyle={{ marginHorizontal: 10 }}
           onSnapToItem={handleSnapToItem}
         />
       </View>
@@ -113,10 +123,21 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     marginBottom: 10,
-   /*  alignSelf: 'center', */
+    alignSelf: 'center',
+  },
+  detailsButton: {
+    marginTop: 10,
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    padding: 5,
+    alignItems: 'center',
+  },
+  detailsButtonText: {
+    color: 'white',
+    fontSize: 14,
   },
 });
 

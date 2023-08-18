@@ -71,7 +71,7 @@ const FormularioCadastro = () => {
 
       </TouchableOpacity>
 
-      {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} />}
+      {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} local={local} />}
 
       <TouchableOpacity onPress={pickImageAsync} style={styles.imageButton}>
         <Text style={styles.buttonText}>Selecionar Foto</Text>

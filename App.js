@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Navbar from './components/Navbar';
 import MapTest from './components/MapTest';
 import NewAnimal from './components/NewAnimal';
+import ItemDetalhes from './components/ItemDetalhes';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="NewAnimal" component={NewAnimal} />
         <Stack.Screen name="MapTest" component={MapTest} />
+        <Stack.Screen name="ItemDetalhes" component={ItemDetalhes} />
       </Stack.Navigator>
     </NavigationContainer>
   );
