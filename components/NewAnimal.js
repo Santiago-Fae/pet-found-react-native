@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Keyboard } from 'react-native';
 import Navbar from './Navbar';
-import MapaSelecaoLocal from './MapaSelecaoLocal'; // Importe o novo componente
-import * as ImagePicker from 'expo-image-picker';
+import MapaSelecaoLocal from './MapaSelecaoLocal';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from '@expo/vector-icons'; // Importe o FontAwesome
-
-const PlaceholderImage = require('../assets/images/im-no-photo.jpg');
+import { FontAwesome } from '@expo/vector-icons';
+import SelectAnimal from './NewAnimal/SelectAnimal';
+import FotoAnimal from './NewAnimal/FotoAnimal';
 
 const FormularioCadastro = () => {
   const navigation = useNavigation();
@@ -14,35 +13,25 @@ const FormularioCadastro = () => {
   const [local, setLocal] = useState('');
   const [foto, setFoto] = useState(null);
   const [showMapa, setShowMapa] = useState(false);
-  const imageSource = foto ? { uri: foto } : PlaceholderImage;
+  const [animal, setAnimal] = useState('cachorro'); // New state for the select input
 
   const onSelectLocation = (location) => {
     setLocal(location);
     setShowMapa(false);
   };
 
-  const pickImageAsync = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setFoto(result.assets[0].uri);
-    } else {
-      alert('You did not select any image.');
-    }
-  };
 
   const cadastrar = () => {
+    console.log(animal)
     if (local) {
       const data = {
         nome,
         latitude: local.latitude,
         longitude: local.longitude,
         foto,
+        animal, // Include the selected animal in the data
       };
-      // Lógica de cadastro aqui
+      // Logic for registration here
       navigation.navigate('Main', { teste: data });
     } else {
       alert('Selecione um local no mapa.');
@@ -58,8 +47,10 @@ const FormularioCadastro = () => {
         placeholder="Digite seu nome"
         style={styles.input}
       />
+      
+      <SelectAnimal onAnimalChange={(animal) => setAnimal(animal)} />
 
-      <TouchableOpacity onPress={() => {Keyboard.dismiss(); setShowMapa(true)}} style={[styles.mapButton, local && styles.selectedButton]}>
+      <TouchableOpacity onPress={() => { Keyboard.dismiss(); setShowMapa(true) }} style={[styles.mapButton, local && styles.selectedButton]}>
         <View style={styles.buttonContent}>
           <Text style={[styles.buttonText, local && styles.selectedButtonText]}>
             {local ? 'Local Selecionado' : 'Selecionar Local no Mapa'}
@@ -70,16 +61,7 @@ const FormularioCadastro = () => {
 
       {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} local={local} />}
 
-      <TouchableOpacity onPress={pickImageAsync} style={[styles.mapButton, foto && styles.selectedButton]}>
-        <View style={styles.buttonContent}>
-          <Text style={[styles.buttonText, foto && styles.selectedButtonText]}>
-            {foto ? 'Foto Selecionada' : 'Selecionar Foto'}
-          </Text>
-          {foto && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
-        </View>
-      </TouchableOpacity>
-
-      <Image source={imageSource} style={styles.image} />
+      <FotoAnimal onFotoChange={(foto) => setFoto(foto)} />
 
       <TouchableOpacity onPress={cadastrar} style={styles.submitButton}>
         <Text style={styles.buttonText}>Cadastrar</Text>
@@ -115,19 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
   },
-  imageButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    padding: 10,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 15,
-    alignSelf: 'center',
-  },
   submitButton: {
     backgroundColor: '#007AFF',
     borderRadius: 8,
@@ -140,10 +109,10 @@ const styles = StyleSheet.create({
   },
 
   selectedButton: {
-    backgroundColor: 'green', // Cor verde quando selecionado
+    backgroundColor: 'green',
   },
   selectedButtonText: {
-    color: 'white', // Texto branco quando selecionado
+    color: 'white',
   },
   buttonContent: {
     flexDirection: 'row',
@@ -152,6 +121,7 @@ const styles = StyleSheet.create({
   checkIcon: {
     marginLeft: 8,
   },
+
 });
 
 export default FormularioCadastro;
