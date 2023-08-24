@@ -31,7 +31,6 @@ const FormularioCadastro = () => {
         foto,
         animal, // Include the selected animal in the data
       };
-      // Logic for registration here
       navigation.navigate('Main', { teste: data });
     } else {
       alert('Selecione um local no mapa.');

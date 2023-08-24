@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Navbar from './components/Navbar';
-import MapTest from './components/MapTest';
+import Map from './components/Map';
 import NewAnimal from './components/NewAnimal';
 import ItemDetalhes from './components/ItemDetalhes';
 
@@ -17,7 +17,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="NewAnimal" component={NewAnimal} />
-        <Stack.Screen name="MapTest" component={MapTest} />
+        <Stack.Screen name="Map" component={Map} />
         <Stack.Screen name="ItemDetalhes" component={ItemDetalhes} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -29,7 +29,7 @@ function MainScreen(local) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <MapTest />
+      <Map />
       <Navbar style={{ width: '100%', height: '100%' }} />
     </View>
   );

@@ -1,180 +1,230 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, PermissionsAndroid } from 'react-native';
-import MapView, { AnimatedRegion, MarkerAnimated, Animated  } from 'react-native-maps';
-import { useState, useEffect } from 'react';
-import Geolocation from 'react-native-geolocation-service';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import Carousel from 'react-native-snap-carousel';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-
-const Map = () => { 
-  
-/*   const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-
-  useEffect(() => {
-    const obterPermissao = async () => {
-      try {
-        console.log('Obtendo permissão...');
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Permissão de Localização',
-            message: 'Precisamos da sua permissão para acessar sua localização.',
-            buttonNeutral: 'Pergunte-me depois',
-            buttonNegative: 'Cancelar',
-            buttonPositive: 'OK',
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
-            console.log(position),
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              console.log('Permissão de localização negada');
-              setLatitude(latitude); 
-              setLongitude(longitude);
-            },
-            (error) => {
-              console.log('Erro ao obter a localização: ', error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-          );
-        } else {
-          console.log('Permissão de localização negada');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-
-    obterPermissao();
-  }, []); */
-
-    const [coordinate, setCoordinate] = useState(
-      new AnimatedRegion({
-        latitude: -29.1687337,
-        longitude: -51.1336682,
-      })
-    );
-
-    useEffect(() => {
-      const duration = 500;
-
-      if (Platform.OS === 'android') {
-        if (this.marker) {
-          this.marker.animateMarkerToCoordinate(coordinate, duration);
-        }
-      } else {
-        coordinate.timing({
-          ...nextProps.coordinate,
-          useNativeDriver: true,
-          duration,
-        }).start();
-      }
-    }, [coordinate]);
-
-  return (
-    <View style={{width: '100%', height: '90%'}}>
-      <MapView style={{width: '100%', height: '100%'}}
-        initialRegion={{
-          latitude: -29.1687337,
-          longitude: -51.1336682,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
-      <MarkerAnimated
-          ref={marker => {
-            this.marker = marker;
-          }}
-          coordinate={coordinate}
-      />
-    </MapView>
-    </View>
+const Map = () => {
+  const [markers, setMarkers] = useState([
+    {
+      id: 1,
+      latitude: -29.150123,
+      longitude: -51.167890,
+      nome: "Charlie",
+      foto: require('../assets/images/lost-animals/animal-1.jpeg'),
+      descricao: "Nosso amado Charlie, um cachorro dourado de olhos curiosos, desapareceu durante um passeio no parque. Ajude-nos a trazer nosso amigo peludo de volta para casa! #EncontreCharlie #CachorroDesaparecido"
+    },
+    {
+      id: 2,
+      latitude: -29.155678,
+      longitude: -51.163456,
+      nome: "Luna",
+      descricao: "Nossa adorável Luna, uma gata preta de olhos misteriosos, sumiu da nossa casa. Sua falta nos entristece, e qualquer informação é valiosa para reuni-la conosco! #OndeEstáLuna #GataDesaparecida"
+    },
+    {
+      id: 3,
+      latitude: -29.162345,
+      longitude: -51.169876,
+      nome: "Max",
+      descricao: "Nosso querido Max, um cachorro border collie preto e branco, desapareceu enquanto brincava no quintal. Ajude-nos a trazer de volta toda a alegria que ele traz à nossa família! #EncontreMax #CachorroDesaparecido"
+    },
+    {
+      id: 4,
+      latitude: -29.159876,
+      longitude: -51.162345,
+      nome: "Mia",
+      descricao: "Nossa gracinha Mia, uma gata siamesa de pelos elegantes e olhos azuis intensos, sumiu do nosso lar. Compartilhe e nos ajude a trazer de volta a graça aos nossos dias! #OndeEstáMia #GataDesaparecida"
+    },
+    {
+      id: 5,
+      latitude: -29.157890,
+      longitude: -51.175432,
+      nome: "Rocky",
+      descricao: "Nosso destemido Rocky, um cachorro poodle toy branco, desapareceu após uma aventura. Sua coragem nos inspira; vamos encontrá-lo juntos! #EncontreRocky #CachorroDesaparecido"
+    },
+    {
+      id: 6,
+      latitude: -29.1687337,
+      longitude: -51.1336682,
+      nome: "Lola",
+      descricao: "Nossa leal amiga Lola, uma gata persa com pelagem exuberante, sumiu sem deixar rastro. Sua presença é inestimável para nós; compartilhe para nos ajudar a reuni-la! #OndeEstáLola #GataDesaparecida"
+    },
+    {
+      id: 7,
+      latitude: -29.166543,
+      longitude: -51.177890,
+      nome: "Buddy",
+      descricao: "Nosso parceiro de brincadeiras, Buddy, um cachorro labrador retriever, saiu para um passeio e não voltou. Compartilhe esta mensagem para trazer de volta nosso brincalhão! #EncontreBuddy #CachorroDesaparecido"
+    },
+    {
+      id: 8,
+      latitude: -29.153456,
+      longitude: -51.164567,
+      nome: "Nina",
+      descricao: "Nossa curiosa Nina, uma gata maine coon de pelagem longa, desapareceu da nossa casa. Sua ausência nos deixa vazios; ajude-nos a trazer sua energia única de volta! #OndeEstáNina #GataDesaparecida"
+    },
+    {
+      id: 9,
+      latitude: -29.170987,
+      longitude: -51.179876,
+      nome: "Bailey",
+      descricao: "Nosso amigo amigável Bailey, um cachorro golden retriever, desapareceu após um passeio. Sua simpatia é contagiante; vamos encontrá-lo e espalhar alegria novamente! #EncontreBailey #CachorroDesaparecido"
+    },
+    {
+      id: 10,
+      latitude: -29.156789,
+      longitude: -51.168765,
+      nome: "Sophie",
+      descricao: "Nossa elegante Sophie, uma gata siamesa com uma postura única, sumiu de nossa casa. Sua graça nos cativa; vamos trazê-la de volta para seu lar! #OndeEstáSophie #GataDesaparecida"
+    }
+  ]
   );
-};
-
-export default Map;
-
-/* 
-Marcador no centro da tela.
-
-export default Map;
-
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, PermissionsAndroid } from 'react-native';
-import MapView, { AnimatedRegion, MarkerAnimated, Animated  } from 'react-native-maps';
-import { useState, useEffect } from 'react';
-import Geolocation from 'react-native-geolocation-service';
-
-const LATITUDE = -29.1687337;
-const LONGITUDE = -51.1336682;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = 0.0421;
-
-const Map = () => { 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-
-  useEffect(() => {
-    const obterPermissao = async () => {
-      try {
-        console.log('Obtendo permissão...');
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Permissão de Localização',
-            message: 'Precisamos da sua permissão para acessar sua localização.',
-            buttonNeutral: 'Pergunte-me depois',
-            buttonNegative: 'Cancelar',
-            buttonPositive: 'OK',
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
-            console.log(position),
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              console.log('Permissão de localização negada');
-              setLatitude(latitude); 
-              setLongitude(longitude);
-            },
-            (error) => {
-              console.log('Erro ao obter a localização: ', error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-          );
-        } else {
-          console.log('Permissão de localização negada');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-
-    obterPermissao();
-  }, []);
-
-  const [region, setRegion] = useState({
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA,
-  });
-
-  const onRegionChange = newRegion => {
-    setRegion(newRegion);
+  const route = useRoute();
+  const markerRefs = useRef(markers?.map(() => React.createRef()) || []);
+  const [isActive, setIsActive] = useState(1);
+  const navigation = useNavigation();
+  const handleDetailsButton = item => {
+    // Navegar para a tela de detalhes com as informações do item
+    navigation.navigate('ItemDetalhes', { item });
   };
 
+  useEffect(() => {
+    if (route.params?.teste && route.params.teste) {
+      route.params.teste.id = markers.length + 1;
+      setMarkers(prevMarkers => [...prevMarkers, route.params.teste]);
+      markerRefs.current =  [...markerRefs.current, React.createRef()];
+      navigation.setParams({teste: null});
+    }
+  }, [route.params?.teste]);
+  
+  const carouselRef = useRef(null); // Ref for the Carousel
+
+  const handleMarkerDrag = (e, markerIndex) => {
+    const { latitude, longitude } = e.nativeEvent.coordinate;
+    setMarkers(prevMarkers =>
+      prevMarkers.map((m, index) =>
+        index === markerIndex ? { ...m, latitude, longitude } : m
+      )
+    );
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.carouselItem}>
+      {item.foto ? 
+        (typeof item.foto === 'string' && item.foto.startsWith('file://') ? 
+        <Image source={{ uri: item.foto }} style={styles.image} /> 
+        : <Image source={item.foto} style={styles.image} />) 
+      : ''}
+      <Text>{`Id: ${item.id}`}</Text>
+      <Text>{`Longitude: ${item.longitude}`}</Text>
+      <Text>{`Nome: ${item.nome}`}</Text>
+      <TouchableOpacity
+        style={styles.detailsButton}
+        onPress={() => handleDetailsButton(item)}>
+        <Text style={styles.detailsButtonText}>Detalhes</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const handleSnapToItem = index => {
+    const marker = markers[index];
+    setIsActive(marker.id);
+    markerRefs.current[index].current.showCallout()
+    mapRef.current.animateToRegion(
+      {
+        latitude: marker.latitude,
+        longitude: marker.longitude,
+        latitudeDelta: 0.025,
+        longitudeDelta: 0.025,
+      },
+      500
+    );
+  };
+
+
+  const mapRef = useRef(null); // Ref for the MapView
+
   return (
-    <View style={{ width: '100%', height: '90%' }}>
+    <View style={{ width: '100%', height: '90%', flex: 1 }}>
       <MapView
-        style={{ width: '100%', height: '100%' }}
-        initialRegion={region}
-        onRegionChange={onRegionChange}>
-        <MarkerAnimated coordinate={region} />
+        style={{ width: '100%', height: '100%', flex: 1 }}
+        ref={mapRef}
+        pinColor={'green'}
+        initialRegion={{
+          latitude: markers[0].latitude,
+          longitude: markers[0].longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        {markers.map((marker, index) => (
+          <Marker
+            key={`${marker.id}-${isActive === marker.id ? 'active' : 'inactive'}`}
+            coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+            title={marker.nome}
+            ref={markerRefs.current[index]}
+            pinColor={isActive === marker.id ? 'blue' : 'red'}
+            draggable
+            onDragEnd={(e) => handleMarkerDrag(e, index)}
+            onPress={() => {
+              setIsActive(marker.id);
+              carouselRef.current.snapToItem(index); // Snap to the selected marker's index
+            }}
+          />
+        ))}
       </MapView>
+      <View style={styles.carouselContainer}>
+        <Carousel
+          ref={carouselRef}
+          data={markers}
+          renderItem={renderItem}
+          sliderWidth={400}
+          itemWidth={225}
+          onSnapToItem={handleSnapToItem}
+        />
+      </View>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  carouselContainer: {
+    position: 'absolute',
+    bottom: 100,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  carouselItem: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 10,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    elevation: 3,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    marginBottom: 10,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  detailsButton: {
+    marginTop: 10,
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    padding: 5,
+    alignItems: 'center',
+  },
+  detailsButtonText: {
+    color: 'white',
+    fontSize: 14,
+  },
+
+  selectedMarker: {
+    backgroundColor: 'blue',
+  },
+});
+
 export default Map;
- */
