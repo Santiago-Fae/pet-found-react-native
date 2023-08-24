@@ -34,14 +34,12 @@ const MapaSelecaoLocal = ({ onSelectLocation, local }) => {
   };
 
   return (
-    <View style={{ height: Dimensions.get('window').height + 100 }}>
+    <View style={{ position: 'absolute', zIndex: 100, height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
       <MapView
         style={{
-          flex: 1,
+          position: 'absolute',
           width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height + 170,
-          left: -20,
-          top: -170,
+          height: Dimensions.get('window').height,
         }}
         initialRegion={region}
         onRegionChange={onRegionChange}>
@@ -61,11 +59,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center', // Centraliza o botão horizontalmente
     position: 'absolute',
-    bottom: Dimensions.get('window').height * 0.5,
-    flex: 1,
+    bottom: 0.25 * Dimensions.get('window').height,
+    left: 0.4 * Dimensions.get('window').width,
   },
   confirmButtonText: {
     color: 'white',
