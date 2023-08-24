@@ -19,6 +19,7 @@ const Map = () => {
       latitude: -29.155678,
       longitude: -51.163456,
       nome: "Luna",
+      foto: require('../assets/images/lost-animals/animal-2.jpeg'),
       descricao: "Nossa adorável Luna, uma gata preta de olhos misteriosos, sumiu da nossa casa. Sua falta nos entristece, e qualquer informação é valiosa para reuni-la conosco! #OndeEstáLuna #GataDesaparecida"
     },
     {
@@ -26,6 +27,7 @@ const Map = () => {
       latitude: -29.162345,
       longitude: -51.169876,
       nome: "Max",
+      foto: require('../assets/images/lost-animals/animal-3.jpeg'),
       descricao: "Nosso querido Max, um cachorro border collie preto e branco, desapareceu enquanto brincava no quintal. Ajude-nos a trazer de volta toda a alegria que ele traz à nossa família! #EncontreMax #CachorroDesaparecido"
     },
     {
@@ -33,6 +35,7 @@ const Map = () => {
       latitude: -29.159876,
       longitude: -51.162345,
       nome: "Mia",
+      foto: require('../assets/images/lost-animals/animal-4.jpeg'),
       descricao: "Nossa gracinha Mia, uma gata siamesa de pelos elegantes e olhos azuis intensos, sumiu do nosso lar. Compartilhe e nos ajude a trazer de volta a graça aos nossos dias! #OndeEstáMia #GataDesaparecida"
     },
     {
@@ -40,6 +43,7 @@ const Map = () => {
       latitude: -29.157890,
       longitude: -51.175432,
       nome: "Rocky",
+      foto: require('../assets/images/lost-animals/animal-3.jpeg'),
       descricao: "Nosso destemido Rocky, um cachorro poodle toy branco, desapareceu após uma aventura. Sua coragem nos inspira; vamos encontrá-lo juntos! #EncontreRocky #CachorroDesaparecido"
     },
     {
@@ -47,6 +51,7 @@ const Map = () => {
       latitude: -29.1687337,
       longitude: -51.1336682,
       nome: "Lola",
+      foto: require('../assets/images/lost-animals/animal-2.jpeg'),
       descricao: "Nossa leal amiga Lola, uma gata persa com pelagem exuberante, sumiu sem deixar rastro. Sua presença é inestimável para nós; compartilhe para nos ajudar a reuni-la! #OndeEstáLola #GataDesaparecida"
     },
     {
@@ -54,6 +59,7 @@ const Map = () => {
       latitude: -29.166543,
       longitude: -51.177890,
       nome: "Buddy",
+      foto: require('../assets/images/lost-animals/animal-1.jpeg'),
       descricao: "Nosso parceiro de brincadeiras, Buddy, um cachorro labrador retriever, saiu para um passeio e não voltou. Compartilhe esta mensagem para trazer de volta nosso brincalhão! #EncontreBuddy #CachorroDesaparecido"
     },
     {
@@ -61,6 +67,7 @@ const Map = () => {
       latitude: -29.153456,
       longitude: -51.164567,
       nome: "Nina",
+      foto: require('../assets/images/lost-animals/animal-4.jpeg'),
       descricao: "Nossa curiosa Nina, uma gata maine coon de pelagem longa, desapareceu da nossa casa. Sua ausência nos deixa vazios; ajude-nos a trazer sua energia única de volta! #OndeEstáNina #GataDesaparecida"
     },
     {
@@ -68,6 +75,7 @@ const Map = () => {
       latitude: -29.170987,
       longitude: -51.179876,
       nome: "Bailey",
+      foto: require('../assets/images/lost-animals/animal-2.jpeg'),
       descricao: "Nosso amigo amigável Bailey, um cachorro golden retriever, desapareceu após um passeio. Sua simpatia é contagiante; vamos encontrá-lo e espalhar alegria novamente! #EncontreBailey #CachorroDesaparecido"
     },
     {
@@ -75,6 +83,7 @@ const Map = () => {
       latitude: -29.156789,
       longitude: -51.168765,
       nome: "Sophie",
+      foto: require('../assets/images/lost-animals/animal-1.jpeg'),
       descricao: "Nossa elegante Sophie, uma gata siamesa com uma postura única, sumiu de nossa casa. Sua graça nos cativa; vamos trazê-la de volta para seu lar! #OndeEstáSophie #GataDesaparecida"
     }
   ]
@@ -115,9 +124,9 @@ const Map = () => {
         <Image source={{ uri: item.foto }} style={styles.image} /> 
         : <Image source={item.foto} style={styles.image} />) 
       : ''}
-      <Text>{`Id: ${item.id}`}</Text>
-      <Text>{`Longitude: ${item.longitude}`}</Text>
-      <Text>{`Nome: ${item.nome}`}</Text>
+{/*       <Text>{`Id: ${item.id}`}</Text> */}
+      <Text style={styles.highlightedName}>{`${item.nome}`}</Text>
+      <Text>{`${item.descricao.length > 50 ? item.descricao.slice(0, 50) + '...' : item.descricao}`}</Text>
       <TouchableOpacity
         style={styles.detailsButton}
         onPress={() => handleDetailsButton(item)}>
@@ -221,7 +230,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
-
+  
+  highlightedName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 3,
+    textAlign: 'center',
+  },
+  
   selectedMarker: {
     backgroundColor: 'blue',
   },

@@ -8,12 +8,15 @@ const ItemDetalhes = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      {item.foto ? (
-        <Image source={{ uri: item.foto }} style={styles.image} />
-      ) : null}
+      {item.foto ?
+        (typeof item.foto === 'string' && item.foto.startsWith('file://') ? 
+        <Image source={{ uri: item.foto }} style={styles.image} /> 
+        : <Image source={item.foto} style={styles.image} />) 
+      : ''}
       <Text style={styles.text}>{`Latitude: ${item.latitude}`}</Text>
       <Text style={styles.text}>{`Longitude: ${item.longitude}`}</Text>
       <Text style={styles.text}>{`Nome: ${item.nome}`}</Text>
+      <Text style={styles.text}>{`${item.descricao}`}</Text>
       <Navbar style={{ zIndex: 2 }} />
     </View>
   );
@@ -31,6 +34,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 20,
+    borderRadius: 8,
   },
   text: {
     fontSize: 16,
