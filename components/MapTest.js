@@ -100,8 +100,8 @@ const Map = () => {
           ref={carouselRef}
           data={markers}
           renderItem={renderItem}
-          sliderWidth={300}
-          itemWidth={300}
+          sliderWidth={400}
+          itemWidth={225}
           onSnapToItem={handleSnapToItem}
         />
       </View>
