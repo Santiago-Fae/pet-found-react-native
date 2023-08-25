@@ -16,7 +16,7 @@ const ItemDetalhes = ({ route }) => {
       <Text style={styles.text}>{`Latitude: ${item.latitude}`}</Text>
       <Text style={styles.text}>{`Longitude: ${item.longitude}`}</Text>
       <Text style={styles.text}>{`Nome: ${item.nome}`}</Text>
-      <Text style={styles.text}>{`${item.descricao}`}</Text>
+      <Text style={styles.text}>{`${item.descricao ? item.descricao : ''}`}</Text>
       <Navbar style={{ zIndex: 2 }} />
     </View>
   );

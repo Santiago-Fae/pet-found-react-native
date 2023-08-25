@@ -126,7 +126,7 @@ const Map = () => {
       : ''}
 {/*       <Text>{`Id: ${item.id}`}</Text> */}
       <Text style={styles.highlightedName}>{`${item.nome}`}</Text>
-      <Text>{`${item.descricao.length > 50 ? item.descricao.slice(0, 50) + '...' : item.descricao}`}</Text>
+      <Text>{`${item.descricao ? (item.descricao.length > 50 ? item.descricao.slice(0, 50) + '...' : item.descricao) : ''}`}</Text>
       <TouchableOpacity
         style={styles.detailsButton}
         onPress={() => handleDetailsButton(item)}>

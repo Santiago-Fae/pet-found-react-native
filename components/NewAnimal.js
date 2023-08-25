@@ -22,7 +22,6 @@ const FormularioCadastro = () => {
 
 
   const cadastrar = () => {
-    console.log(animal)
     if (local) {
       const data = {
         nome,
