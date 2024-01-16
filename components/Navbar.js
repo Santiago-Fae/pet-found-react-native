@@ -20,9 +20,9 @@ const Navbar = () => {
     setSubmenuVisible(false);
   };
 
-  const newAnimal = () => {
+  const goTo = (screen) => {
     closeSubmenu(); // Fecha o submenu ao clicar em "NewAnimal"
-    navigation.navigate('NewAnimal');
+    navigation.navigate(screen);
   };
 
   const Map = () => {
@@ -55,11 +55,11 @@ const Navbar = () => {
             duration={300} // Define a duração da animação em milissegundos
             style={[styles.submenuContainer, { width: larguraTela * 0.5, height: alturaTela - alturaMenu, padding: 20 }]}
           >
-            <Pressable onPress={newAnimal} style={styles.submenuItem}>
-              <Text style={styles.submenuText}>NewAnimal</Text>
+            <Pressable onPress={() => goTo('NewAnimal')} style={styles.submenuItem}>
+              <Text style={styles.submenuText}>New Animal</Text>
             </Pressable>
-            <Pressable onPress={newAnimal} style={styles.submenuItem}>
-              <Text style={styles.submenuText}>NewAnimal</Text>
+            <Pressable onPress={() => goTo('Ongs')} style={styles.submenuItem}>
+              <Text style={styles.submenuText}>Ongs</Text>
             </Pressable>
           </Animatable.View>
         </Pressable>
