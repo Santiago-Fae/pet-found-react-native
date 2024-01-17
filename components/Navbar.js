@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigation = useNavigation();
   const larguraTela = Dimensions.get('window').width;
   const alturaTela = Dimensions.get('window').height;
-  const alturaMenu = alturaTela * 0.1; // 10% da altura da tela
+  const alturaMenu = '10%'; // 10% da altura da tela
 
   const [submenuVisible, setSubmenuVisible] = useState(false);
 
@@ -55,12 +55,12 @@ const Navbar = () => {
       >
         <Pressable style={styles.modalOverlay} onPress={closeSubmenu}>
           <Animatable.View
-            animation="slideInLeft" // Define a animação desejada
-            duration={300} // Define a duração da animação em milissegundos
-            style={[styles.submenuContainer, { width: larguraTela * 0.5, height: alturaTela - alturaMenu, padding: 20 }]}
+            animation="slideInLeft"
+            duration={300}
+            style={[styles.submenuContainer, { width: larguraTela * 0.5, height: '90%', padding: 20 }]}
           >
             <Pressable onPress={() => goTo('NewAnimal')} style={styles.submenuItem}>
-              <Text style={styles.submenuText}>New Animal</Text>
+              <Text style={styles.submenuText}>Novo Animal</Text>
             </Pressable>
             <Pressable onPress={() => goTo('Ongs')} style={styles.submenuItem}>
               <Text style={styles.submenuText}>Ongs</Text>
@@ -105,9 +105,14 @@ const styles = StyleSheet.create({
   submenuItem: {
     paddingVertical: 20,
     paddingHorizontal: 30,
+    marginVertical: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'center',
   },
   submenuText: {
     fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

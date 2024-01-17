@@ -31,6 +31,9 @@
       "eas": {
         "projectId": "f3258e08-79c2-433b-aa62-3756cabb2840"
       }
+    },
+    "androidNavigationBar": {
+      "visible": "immersive"
     }
   }
 }

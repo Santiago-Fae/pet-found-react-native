@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import {DataForMap} from './DataForTest/TestCases';
+import ProfileButton from './ProfileButton';
 
 const Map = () => {
   const [markers, setMarkers] = useState(DataForMap);
@@ -73,6 +74,7 @@ const Map = () => {
 
   return (
     <View style={{ width: '100%', height: '90%', flex: 1 }}>
+      <ProfileButton />
       <MapView
         style={{ width: '100%', height: '100%', flex: 1 }}
         ref={mapRef}
@@ -99,6 +101,7 @@ const Map = () => {
             }}
           />
         ))}
+
       </MapView>
       <View style={styles.carouselContainer}>
         <Carousel

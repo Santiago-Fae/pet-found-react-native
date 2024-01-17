@@ -1,15 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Animated, TouchableOpacity } from "react-native";
+
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-
 import Navbar from './components/Navbar';
 import Map from './components/Map';
 import NewAnimal from './components/NewAnimal';
 import ItemDetalhes from './components/ItemDetalhes';
 import Ongs from './components/Ongs';
 import Test from './components/Test';
+import AlertComponent from './components/AlertComponent'; // Import the AlertComponent
 
 const Stack = createStackNavigator();
 
@@ -27,14 +28,39 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
 function MainScreen(local) {
+  const [alertVisible, setAlertVisible] = useState(false);
+
+  const toggleAlert = () => {
+    console.log(alertVisible)
+    setAlertVisible(!alertVisible);
+  };
+
+  const closeAlert = () => {
+    setAlertVisible(false);
+  };
+
+  // Set up an interval to show an alert every minute
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      toggleAlert();
+    }, 6000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Map />
       <Navbar style={{ width: '100%', height: '100%' }} />
+
+      {/* Render the AlertComponent dynamically */}
+        <TouchableOpacity onPress={() => toggleAlert()}>
+          <Animated.View style={{ ...styles.alertContainer }}>
+            <AlertComponent />
+          </Animated.View>
+        </TouchableOpacity>
     </View>
   );
 }
@@ -54,5 +80,9 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: 'center',
+  },
+  alertContainer: {
+    zIndex: 999,
+    width: '100%',
   },
 });
