@@ -9,6 +9,7 @@ import Map from './components/Map';
 import NewAnimal from './components/NewAnimal';
 import ItemDetalhes from './components/ItemDetalhes';
 import Ongs from './components/Ongs';
+import Test from './components/Test';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Map" component={Map} />
         <Stack.Screen name="ItemDetalhes" component={ItemDetalhes} />
         <Stack.Screen name="Ongs" component={Ongs} />
+        <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     </NavigationContainer>
   );

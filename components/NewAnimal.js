@@ -28,7 +28,7 @@ const FormularioCadastro = () => {
         latitude: local.latitude,
         longitude: local.longitude,
         foto,
-        animal, // Include the selected animal in the data
+        animal,
       };
       navigation.navigate('Main', { teste: data });
     } else {
@@ -42,7 +42,7 @@ const FormularioCadastro = () => {
       <TextInput
         value={nome}
         onChangeText={setNome}
-        placeholder="Digite seu nome"
+        placeholder="Digite o nome do animal"
         style={styles.input}
       />
       

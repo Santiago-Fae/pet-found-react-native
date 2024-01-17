@@ -29,6 +29,10 @@ const Navbar = () => {
     navigation.navigate('Main');
   };
 
+  const Test = () => {
+    navigation.navigate('Test');
+  };
+
   return (
     <View style={[styles.container, { width: larguraTela, height: alturaMenu }]}>
       <TouchableOpacity onPress={toggleSubmenu} style={styles.botao}>
@@ -39,7 +43,7 @@ const Navbar = () => {
         <Text style={styles.textoBotao}><FontAwesome name="home" size={30} color="black" /></Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity onPress={Test} style={styles.botao}>
         <Text style={styles.textoBotao}><FontAwesome5 name="paw" size={30} color="black" /></Text>
       </TouchableOpacity>
 
