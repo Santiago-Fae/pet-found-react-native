@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Animated, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Animated, Pressable, Modal } from "react-native";
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,20 +31,18 @@ export default function App() {
 function MainScreen(local) {
   const [alertVisible, setAlertVisible] = useState(false);
 
-  const toggleAlert = () => {
-    console.log(alertVisible)
-    setAlertVisible(!alertVisible);
+  const openAlert = () => {
+    setAlertVisible(true);
   };
 
   const closeAlert = () => {
     setAlertVisible(false);
   };
 
-  // Set up an interval to show an alert every minute
   useEffect(() => {
     const intervalId = setInterval(() => {
-      toggleAlert();
-    }, 6000);
+      openAlert();
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -55,12 +53,11 @@ function MainScreen(local) {
       <Map />
       <Navbar style={{ width: '100%', height: '100%' }} />
 
-      {/* Render the AlertComponent dynamically */}
-        <TouchableOpacity onPress={() => toggleAlert()}>
-          <Animated.View style={{ ...styles.alertContainer }}>
-            <AlertComponent />
-          </Animated.View>
-        </TouchableOpacity>
+      <Pressable style={{width: '100%',position: 'absolute', zIndex: 999, opacity: alertVisible ? 1 : 0 }} onPress={() => closeAlert()}>
+        <Animated.View style={{ ...styles.alertContainer }}>
+          <AlertComponent closeAlert={closeAlert}/>
+        </Animated.View>
+      </Pressable>
     </View>
   );
 }
@@ -80,9 +77,5 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: 'center',
-  },
-  alertContainer: {
-    zIndex: 999,
-    width: '100%',
   },
 });
