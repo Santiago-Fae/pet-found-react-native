@@ -44,8 +44,10 @@ const Map = () => {
         : <Image source={item.foto} style={styles.image} />) 
       : ''}
 {/*       <Text>{`Id: ${item.id}`}</Text> */}
-      <Text style={styles.highlightedName}>{`${item.nome}`}</Text>
-      <Text>{`${item.descricao ? (item.descricao.length > 50 ? item.descricao.slice(0, 50) + '...' : item.descricao) : ''}`}</Text>
+      <View  style={styles.boxText}>
+        <Text style={styles.highlightedName}>{`${item.nome}`}</Text>
+        <Text style={styles.description}>{`${item.descricao ? (item.descricao.length > 55 ? item.descricao.slice(0, 55) + '...' : item.descricao) : ''}`}</Text>
+      </View >
       <TouchableOpacity
         style={styles.detailsButton}
         onPress={() => handleDetailsButton(item)}>
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   image: {
-    width: 150,
+    width: 200,
     height: 150,
     marginBottom: 10,
     borderRadius: 10,
@@ -152,11 +154,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   
+  boxText: {
+    backgroundColor: '#ecebeb',
+    borderRadius: 5,
+    padding: 5,
+  },
+
   highlightedName: {
     fontWeight: 'bold',
     fontSize: 16,
     marginBottom: 3,
     textAlign: 'center',
+  },
+
+  description: {
+    fontSize: 12,
   },
   
   selectedMarker: {
