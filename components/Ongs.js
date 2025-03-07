@@ -21,8 +21,8 @@ const Ongs = ({ route }) => {
   return (
     <View style={styles.container}>
       <List.Item
-        title="Ong name 1"
-        description="Ong description 1"
+        title="Helping Paws"
+        description="Helping Paws is a non-profit organization..."
         style={styles.listItem}
         left={(props) => <List.Icon {...props} icon="cat" />}
         right={() => (
@@ -42,8 +42,8 @@ const Ongs = ({ route }) => {
         )}
       />
       <List.Item
-        title="Ong name 1"
-        description="Ong description 1"
+        title="Ong name 2"
+        description="Ong description 2"
         style={styles.listItem}
         left={(props) => <List.Icon {...props} icon="cat" />}
         right={() => (

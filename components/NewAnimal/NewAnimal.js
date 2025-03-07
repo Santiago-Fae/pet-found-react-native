@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Keyboard } from 'react-native';
-import Navbar from './Navbar';
-import MapaSelecaoLocal from './MapaSelecaoLocal';
+import Navbar from '../Navbar';
+import MapaSelecaoLocal from './Actions/MapaSelecaoLocal';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
-import SelectAnimal from './NewAnimal/SelectAnimal';
-import FotoAnimal from './NewAnimal/FotoAnimal';
+import SelectAnimal from './Actions/SelectAnimal';
+import AnimalPhoto from './Actions/AnimalPhoto';
 
 const FormularioCadastro = () => {
   const navigation = useNavigation();
   const [nome, setNome] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [local, setLocal] = useState('');
-  const [foto, setFoto] = useState(null);
+  const [foto, setPhoto] = useState(null);
   const [showMapa, setShowMapa] = useState(false);
-  const [animal, setAnimal] = useState('cachorro'); // New state for the select input
+  const [animal, setAnimal] = useState('dog'); // New state for the select input
 
   const onSelectLocation = (location) => {
     setLocal(location);
@@ -25,6 +26,7 @@ const FormularioCadastro = () => {
     if (local) {
       const data = {
         nome,
+        descricao,
         latitude: local.latitude,
         longitude: local.longitude,
         foto,
@@ -32,26 +34,32 @@ const FormularioCadastro = () => {
       };
       navigation.navigate('Main', { teste: data });
     } else {
-      alert('Selecione um local no mapa.');
+      alert('Please select a location on the map.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Nome:</Text>
+      <Text style={styles.label}>Name:</Text>
       <TextInput
         value={nome}
         onChangeText={setNome}
-        placeholder="Digite o nome do animal"
+        placeholder="Enter the animal's name"
         style={styles.input}
       />
-      
+      <Text style={styles.label}>Description:</Text>
+      <TextInput
+        value={descricao}
+        onChangeText={setDescricao}
+        placeholder="Enter a description"
+        style={styles.input}
+      />
       <SelectAnimal onAnimalChange={(animal) => setAnimal(animal)} />
 
       <TouchableOpacity onPress={() => { Keyboard.dismiss(); setShowMapa(true) }} style={[styles.mapButton, local && styles.selectedButton]}>
         <View style={styles.buttonContent}>
           <Text style={[styles.buttonText, local && styles.selectedButtonText]}>
-            {local ? 'Local Selecionado' : 'Selecionar Local no Mapa'}
+            {local ? 'Location Selected' : 'Select Location on Map'}
           </Text>
           {local && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
         </View>
@@ -59,10 +67,10 @@ const FormularioCadastro = () => {
 
       {showMapa && <MapaSelecaoLocal onSelectLocation={onSelectLocation} local={local} />}
 
-      <FotoAnimal onFotoChange={(foto) => setFoto(foto)} />
+      <AnimalPhoto onPhotoChange={(foto) => setPhoto(foto)} />
 
       <TouchableOpacity onPress={cadastrar} style={styles.submitButton}>
-        <Text style={styles.buttonText}>Cadastrar</Text>
+        <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
       <Navbar style={{ zIndex: 2 }} />
     </View>

@@ -19,8 +19,8 @@ const SelectAnimal = ({onAnimalChange}) => {
           onValueChange={(itemValue, itemIndex) => handleAnimalChange(itemValue)}
           style={styles.picker}
         >
-          <Picker.Item label="Cachorro" value="cachorro" />
-          <Picker.Item label="Gato" value="gato" />
+          <Picker.Item label="Dog" value="dog" />
+          <Picker.Item label="Cat" value="cat" />
         </Picker>
       </View>
     </View>

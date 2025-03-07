@@ -14,9 +14,9 @@ const AlertComponent = ({closeAlert}) => {
       onPress={handlePressClose}
     >
       <List.Item
-        title="Hirmes"
+        title="Rex"
         titleStyle={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}
-        description="Novo cachorro perdido na sua região!"
+        description="New lost dog in your area!"
         descriptionStyle={{ color: 'white', fontSize: 14, fontWeight: 'bold' }}
         style={styles.listItem}
         left={(props) => (

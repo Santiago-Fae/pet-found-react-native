@@ -51,7 +51,7 @@ const Map = () => {
       <TouchableOpacity
         style={styles.detailsButton}
         onPress={() => handleDetailsButton(item)}>
-        <Text style={styles.detailsButtonText}>Detalhes</Text>
+        <Text style={styles.detailsButtonText}>Details</Text>
       </TouchableOpacity>
     </View>
   );

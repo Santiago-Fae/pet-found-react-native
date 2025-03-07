@@ -55,15 +55,15 @@ const Navbar = () => {
       >
         <Pressable style={styles.modalOverlay} onPress={closeSubmenu}>
           <Animatable.View
-            animation="slideInLeft"
+            animation="fadeInDown"
             duration={300}
             style={[styles.submenuContainer, { width: larguraTela * 0.5, height: '90%', padding: 20 }]}
           >
             <Pressable onPress={() => goTo('NewAnimal')} style={styles.submenuItem}>
-              <Text style={styles.submenuText}>Novo Animal</Text>
+              <Text style={styles.submenuText}>New Animal</Text>
             </Pressable>
             <Pressable onPress={() => goTo('Ongs')} style={styles.submenuItem}>
-              <Text style={styles.submenuText}>Ongs</Text>
+              <Text style={styles.submenuText}>NGOs</Text>
             </Pressable>
           </Animatable.View>
         </Pressable>

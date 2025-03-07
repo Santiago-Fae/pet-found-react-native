@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Navbar from './components/Navbar';
 import Map from './components/Map';
-import NewAnimal from './components/NewAnimal';
+import NewAnimal from './components/NewAnimal/NewAnimal';
 import ItemDetalhes from './components/ItemDetalhes';
 import Ongs from './components/Ongs';
 import Test from './components/Test';

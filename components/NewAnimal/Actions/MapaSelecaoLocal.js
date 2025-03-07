@@ -4,8 +4,8 @@ import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 
 const MapaSelecaoLocal = ({ onSelectLocation, local }) => {
   const [region, setRegion] = useState({
-    latitude: local ? local.latitude : -29.1687337,
-    longitude: local ? local.longitude : -51.1336682,
+    latitude: local ? local.latitude : 49.2807,
+    longitude: local ? local.longitude : -123.1297, 
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
@@ -47,7 +47,7 @@ const MapaSelecaoLocal = ({ onSelectLocation, local }) => {
       </MapView>
 
       <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-        <Text style={styles.confirmButtonText}>Confirmar</Text>
+        <Text style={styles.confirmButtonText}>Confirm</Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: '#007AFF',
     borderRadius: 8,
-    padding: 10,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center', // Centraliza o botão horizontalmente
     position: 'absolute',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
   },
 });
 

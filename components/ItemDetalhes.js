@@ -9,48 +9,44 @@ const ItemDetalhes = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Botão para voltar */}
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
 
       <View style={styles.flex}>
         <View style={styles.infoContainer}>
-        {item.foto ? (
-          typeof item.foto === 'string' && item.foto.startsWith('file://') ? (
-            <Image source={{ uri: item.foto }} style={styles.image} />
-          ) : (
-            <Image source={item.foto} style={styles.image} />
-          )
-        ) : null}
+          {item.foto ? (
+            typeof item.foto === 'string' && item.foto.startsWith('file://') ? (
+              <Image source={{ uri: item.foto }} style={styles.image} />
+            ) : (
+              <Image source={item.foto} style={styles.image} />
+            )
+          ) : null}
 
-        <Text style={styles.title}>{item.nome}</Text>
-        <Text style={styles.description}>{item.descricao || 'Sem descrição disponível.'}</Text>
-        <View style={styles.locationContainer}>
-          <Text style={styles.locationText}>Latitude: {item.latitude}</Text>
-          <Text style={styles.locationText}>Longitude: {item.longitude}</Text>
-        </View>
+          <Text style={styles.title}>{item.nome}</Text>
+          <Text style={styles.description}>{item.descricao || 'No description available.'}</Text>
+          <View style={styles.locationContainer}>
+          </View>
         </View>
         <View style={styles.actionsBox}>
-          <Text style={styles.title}>Ações</Text>
+          <Text style={styles.title}>Actions</Text>
           <View style={styles.buttonsBox}>
             <TouchableOpacity style={styles.detailsButton}>
-              <Text style={styles.detailsButtonText}>Adotar</Text>
+              <Text style={styles.detailsButtonText}>Adopt</Text>
               <FontAwesome5 style={styles.iconText} name="paw" size={15} color="white" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.detailsButton}>
-              <Text style={styles.detailsButtonText}>Favoritar</Text>
+              <Text style={styles.detailsButtonText}>Favorite</Text>
               <FontAwesome5 style={styles.iconText} name="heart" size={15} color="white" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.detailsButton}>
-              <Text style={styles.detailsButtonText}>Encontrado</Text>
+              <Text style={styles.detailsButtonText}>Found</Text>
               <FontAwesome5 style={styles.iconText} name="check" size={15} color="white" />
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      {/* Navbar */}
       <Navbar style={{ zIndex: 2 }} />
     </SafeAreaView>
   );

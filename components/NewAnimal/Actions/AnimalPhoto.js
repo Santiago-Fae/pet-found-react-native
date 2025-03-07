@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
-const PlaceholderImage = require('../../assets/images/im-no-photo.jpg');
+const PlaceholderImage = require('../../../assets/images/im-no-photo.jpg');
 
-const FotoAnimal = ({onFotoChange}) => {
-  const [foto, setFoto] = useState(null);
-  const imageSource = foto ? { uri: foto } : PlaceholderImage;
+const AnimalPhoto = ({onPhotoChange}) => {
+  const [photo, setPhoto] = useState(null);
+  const imageSource = photo ? { uri: photo } : PlaceholderImage;
 
-  const handleFotoChange = (itemValue) => {
-    setFoto(itemValue);
-    onFotoChange(itemValue);
+  const handlePhotoChange = (itemValue) => {
+    setPhoto(itemValue);
+    onPhotoChange(itemValue);
   };
 
   const pickImageAsync = async () => {
@@ -20,7 +20,7 @@ const FotoAnimal = ({onFotoChange}) => {
     });
 
     if (!result.canceled) {
-        handleFotoChange(result.assets[0].uri);
+        handlePhotoChange(result.assets[0].uri);
     } else {
       alert('You did not select any image.');
     }
@@ -28,12 +28,12 @@ const FotoAnimal = ({onFotoChange}) => {
 
   return (
       <View>
-          <TouchableOpacity onPress={pickImageAsync} style={[styles.mapButton, foto && styles.selectedButton]}>
+          <TouchableOpacity onPress={pickImageAsync} style={[styles.mapButton, photo && styles.selectedButton]}>
             <View style={styles.buttonContent}>
-              <Text style={[styles.buttonText, foto && styles.selectedButtonText]}>
-                {foto ? 'Foto Selecionada' : 'Selecionar Foto'}
+              <Text style={[styles.buttonText, photo && styles.selectedButtonText]}>
+                {photo ? 'Selected Photo' : 'Select Photo'}
               </Text>
-              {foto && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
+              {photo && <FontAwesome name="check" size={20} color="white" style={styles.checkIcon} />}
             </View>
           </TouchableOpacity>
           <Image source={imageSource} style={styles.image} />
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default FotoAnimal;
+export default AnimalPhoto;
