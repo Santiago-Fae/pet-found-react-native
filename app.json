@@ -1,28 +1,48 @@
 {
   "expo": {
-    "name": "teste-react-native",
+    "name": "Pet Found",
     "slug": "teste-react-native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Pet Found uses your location to show lost animals near you."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pet Found needs access to your photos so you can attach a picture of the animal."
+        }
+      ],
+      "expo-status-bar"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.santifae.testereactnative"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.santi_fae.testereactnative"
+      "package": "com.santi_fae.testereactnative",
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,9 +51,6 @@
       "eas": {
         "projectId": "f3258e08-79c2-433b-aa62-3756cabb2840"
       }
-    },
-    "androidNavigationBar": {
-      "visible": "immersive"
     }
   }
 }
