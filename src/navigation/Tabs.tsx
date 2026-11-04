@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import MapScreen from '../screens/MapScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 import NewAnimalScreen from '../screens/NewAnimalScreen';
 import NgosScreen from '../screens/NgosScreen';
+import AdoptionScreen from '../screens/AdoptionScreen';
 import { COLORS } from '../data/constants';
 import type { TabParamList } from './types';
 
@@ -18,11 +20,17 @@ export default function Tabs() {
           backgroundColor: COLORS.accent,
           height: 76,
           paddingTop: 8,
-          paddingBottom: 10,
+          paddingBottom: 19,
           borderTopWidth: 0,
           elevation: 10,
         },
-        tabBarItemStyle: { marginHorizontal: 8, marginVertical: 5, borderRadius: 16 },
+        tabBarItemStyle: {
+          marginHorizontal: 8,
+          marginTop: 2,
+          marginBottom: 8,
+          borderRadius: 20,
+          overflow: 'hidden',
+        },
         tabBarActiveBackgroundColor: '#F5B34E',
         tabBarActiveTintColor: '#4A2B12',
         tabBarInactiveTintColor: '#704512',
@@ -35,6 +43,15 @@ export default function Tabs() {
           tabBarIcon: ({ color }) => <FontAwesome name="home" size={30} color={color} />,
           tabBarButtonTestID: 'tab-map',
           tabBarAccessibilityLabel: 'Map',
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome name="heart" size={27} color={color} />,
+          tabBarButtonTestID: 'tab-favorites',
+          tabBarAccessibilityLabel: 'Favorites',
         }}
       />
       <Tab.Screen
@@ -53,6 +70,15 @@ export default function Tabs() {
           tabBarIcon: ({ color }) => <FontAwesome5 name="paw" size={26} color={color} />,
           tabBarButtonTestID: 'tab-ngos',
           tabBarAccessibilityLabel: 'NGOs',
+        }}
+      />
+      <Tab.Screen
+        name="Adoption"
+        component={AdoptionScreen}
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="hand-holding-heart" size={25} color={color} />,
+          tabBarButtonTestID: 'tab-adoption',
+          tabBarAccessibilityLabel: 'Adoption',
         }}
       />
     </Tab.Navigator>

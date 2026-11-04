@@ -6,6 +6,8 @@ export const COLORS = {
   warning: '#ffb81f',
   success: 'green',
   muted: '#666',
+  ngoCard: '#D5D8E5',
+  ngoText: '#30283D',
 } as const;
 
 /** Fallback map center until the user grants location permission. */

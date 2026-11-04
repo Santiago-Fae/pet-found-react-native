@@ -42,7 +42,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.santi_fae.testereactnative",
+      "package": "com.santi_fae.testereactnative"
     },
     "web": {
       "favicon": "./assets/favicon.png"

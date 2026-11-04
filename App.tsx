@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 import { AnimalsProvider } from './src/context/AnimalsContext';
+import { AdoptionProvider } from './src/context/AdoptionContext';
 import Tabs from './src/navigation/Tabs';
 import AnimalDetailsScreen from './src/screens/AnimalDetailsScreen';
 import NewAnimalAlert from './src/components/NewAnimalAlert';
@@ -16,14 +17,16 @@ export default function App() {
     <SafeAreaProvider>
       <PaperProvider>
         <AnimalsProvider>
-          <NavigationContainer>
-            <StatusBar style="auto" />
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Main" component={Tabs} />
-              <Stack.Screen name="AnimalDetails" component={AnimalDetailsScreen} />
-            </Stack.Navigator>
-            <NewAnimalAlert />
-          </NavigationContainer>
+          <AdoptionProvider>
+            <NavigationContainer>
+              <StatusBar style="auto" />
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Main" component={Tabs} />
+                <Stack.Screen name="AnimalDetails" component={AnimalDetailsScreen} />
+              </Stack.Navigator>
+              <NewAnimalAlert />
+            </NavigationContainer>
+          </AdoptionProvider>
         </AnimalsProvider>
       </PaperProvider>
     </SafeAreaProvider>

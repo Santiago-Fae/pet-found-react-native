@@ -2,8 +2,10 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 
 export type TabParamList = {
   Map: undefined;
+  Favorites: undefined;
   NewAnimal: undefined;
   Ngos: undefined;
+  Adoption: undefined;
 };
 
 export type RootStackParamList = {

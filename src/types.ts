@@ -19,6 +19,15 @@ export interface Animal {
 
 export type NewAnimalInput = Omit<Animal, 'id'>;
 
+export interface AdoptionAnimal {
+  id: string;
+  name: string;
+  description: string;
+  photo: Photo;
+}
+
+export type NewAdoptionAnimalInput = Omit<AdoptionAnimal, 'id'>;
+
 export interface Ngo {
   id: string;
   name: string;
