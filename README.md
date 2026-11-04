@@ -1,37 +1,63 @@
 # PET Found
 
-React Native (Expo SDK 58, TypeScript) app to search, pin and view lost animals.
-There is no backend: all data lives on the device.
+React Native app built with Expo SDK 57 and TypeScript. It helps users find lost
+animals, register reports, and manage animals available for adoption.
 
-## Run
+The project has no backend. Data and photos are stored locally on the device.
+
+## Requirements
+
+- Node.js (LTS recommended; no fixed version is required by this project)
+- npm
+- Expo Go on a physical Android or iOS device
+- A computer and phone connected to the same Wi-Fi network
+
+## Main versions
+
+- Expo SDK `57.0.30`
+- React Native `0.86.3`
+- React `19.2.3`
+- TypeScript `6.0.3`
+
+## Setup and run
 
 ```bash
 npm install
-npx expo start
+npm start
 ```
 
-Android maps need a Google Maps API key: set `expo.android.config.googleMaps.apiKey` in `app.json`.
+Scan the QR code shown by Expo with Expo Go. The app may request permission to
+use the device location and photo library.
 
-## Scripts
+For web:
 
-- `npm run typecheck` – TypeScript check
-- `npm run doctor` – `expo-doctor`
+```bash
+npm run web
+```
 
-## Structure
+Android map tiles require a Google Maps API key. Add it to the Android
+configuration in [app.json](./app.json) before creating a native Android build.
 
-- `App.tsx` – providers and root navigator
-- `src/navigation/` – bottom tabs (Map, New animal, NGOs) and route types
-- `src/screens/` – one file per screen
-- `src/components/` – reusable UI
-- `src/context/AnimalsContext.tsx` – animals state (seed data + user animals, favorites, found status)
-- `src/hooks/usePersistedState.ts` – `useState` backed by AsyncStorage
-- `src/utils/photos.ts` – copies picked photos into the app's document directory
-- `src/data/` – bundled seed data and constants
+## Useful scripts
+
+```bash
+npm run typecheck
+npm run doctor
+```
+
+- `typecheck` checks the TypeScript code.
+- `doctor` checks the Expo project configuration.
+
+## Project structure
+
+- `App.tsx` – application providers and navigation
+- `src/navigation/` – bottom-tab navigation
+- `src/screens/` – application screens
+- `src/components/` – reusable components
+- `src/context/` – local state for lost and adoption animals
+- `src/data/` – bundled sample data
 
 ## Local storage
 
-| What | Where |
-| --- | --- |
-| Animals you register, favorites, found status | AsyncStorage (`@petfound/*` keys) |
-| NGO favorites | AsyncStorage (`@petfound/favorite-ngos`) |
-| Animal photos | `Paths.document/photos/` (only the file name is stored) |
+- Lost animals, favorites, found status, and adoption animals use AsyncStorage.
+- User-selected photos are copied to the app's document directory.
